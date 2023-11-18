@@ -1,0 +1,29 @@
+.shop{
+    margin-top: 5rem;
+}
+.shop h2{
+    font-weight: 500;
+    text-transform: none;
+    font-size: 2.5rem;
+    line-height: 3.125rem !important;
+    letter-spacing: -.029rem;
+    color: #2c2a2a;
+    padding: 0 15px 19px;
+}
+.shop ul{
+    display: flex;
+    justify-content: center;
+}
+.shop ul li:hover{
+    background: var(--primary-color);
+    border-color: var(--primary-color);
+}
+
+
+@media screen and (max-width: 500px) {
+    .shop ul{
+        display: grid;
+        grid-template-columns: 6fr 6fr;
+        grid-gap: .5em;
+    }
+}

@@ -1,0 +1,42 @@
+.blogDetails{
+    background-color: #fff;
+    padding: 30px; 
+}
+.blogDetails .info .date{
+    color: #999;
+    font-size: 12px;
+    letter-spacing: 1px;
+    line-height: 1.583;
+    text-transform: uppercase;
+    transition: color .3s ease-in;
+}
+.blogDetails .info .title{
+    font-size: 24px;
+    margin-top: 10px;
+    transition: color .3s ease-in;
+}
+.blogDetails .info .date:hover, .blogDetails .info .title:hover,.blogDetails .info .auth-info span:hover{
+    color: var(--primary-color);
+    cursor: pointer;
+}
+.blogDetails .info .redmore-btn{
+    transition: color .5s ease-in;
+}
+.blogDetails .info .redmore-btn:hover{
+    color: var(--primary-color) !important;
+    cursor: pointer;
+}
+.blogDetails .info .auth-info{
+    display: flex;
+    justify-content: space-between;
+}
+.blogDetails .info .auth-info span{
+    color: #999;
+    font-size: 15px;
+    letter-spacing: .2px;
+    line-height: 1.583;
+}
+.blogDetails .info .disc{
+    margin-top: 15px;
+    line-height: 1.4;
+}

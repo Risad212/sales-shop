@@ -1,0 +1,82 @@
+.editProduct{
+    padding: 50px !important;
+}
+.editProduct .title{
+    margin-bottom: 20px;
+    font-size: 25px;
+}
+.editProduct .addProductinput{
+    display: grid;
+    grid-template-columns: repeat(2,1fr);
+    grid-column-gap: 1em;
+}
+.editProduct label{
+    font-size: 20px;
+    padding: 10px 0;
+    display: block;
+    font-weight: 400;
+    color: var(--bg-dark);
+}
+.editProduct .addProductinput input[type=text],input[type=email],input[type=number],input[type=file], select, textarea {
+    width: 90% !important;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    resize: vertical;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 1.5;
+    padding: 8px;
+    outline: none;
+}
+.editProduct input,select,textarea{
+    margin-bottom: 20px;
+}
+.editProduct #image{
+    opacity: 0;
+    position: absolute;
+    left: 0;
+    width: 98%;
+    top: 0;
+    height: 90%;
+}
+.editProduct .fileInput{
+    width: 100%;
+    position: relative;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    resize: vertical;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 1.5;
+    padding: 40px 8px;
+    outline: none;
+    text-align: center;
+}
+.editProduct .fileInput svg{
+    width: 35px;
+    height: 35px;
+    fill: var(--bg-dark);
+}
+.editProduct .fileInput h3{
+    color: var(--bg-dark);
+    font-weight: 500;
+}
+.editProduct #submitBtn{
+    padding: 10px 28px;
+    font-size: 15px;
+    border: none;
+    background: var(--primary-color);
+    color: #fff;
+    border-radius: 5px;
+    width: 10%;
+    margin-top: 15px;
+}
+.editProduct select#category {
+    max-width: 90%;
+}
+.secondRow{
+    margin-top: 50px;
+}
+.secondRow img{
+    width: 56%;
+}

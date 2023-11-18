@@ -1,0 +1,25 @@
+.featureItem{
+    display: flex;
+    padding: 40px 45px !important;
+    justify-content: space-between;
+    border-radius: 15px;
+}
+.featureIcon{
+    background: var(--primary-color);
+    height: 3rem;
+    border-radius: 50%;
+    width: 3rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #fff;
+}
+.featureItem .featureTitle{
+    font-size: 20px;
+    margin-bottom: 10px;
+}
+.featureItem span{
+    font-weight: 500;
+    line-height: 1.2;
+    font-size: 20px;
+}

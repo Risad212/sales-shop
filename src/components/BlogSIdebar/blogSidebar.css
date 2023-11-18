@@ -1,0 +1,88 @@
+.blogSidebar{
+    background-color: #fff;
+    border: 1px solid rgba(0,0,0,.06);
+    padding: 30px;
+    margin-bottom: 40px;
+}
+.blogSidebar input{
+    border-radius: 0;
+    color: #747474;
+    font-size: 14px;
+    height: 40px;
+    line-height: 1.571;
+    margin: 0;
+    outline: medium;
+    padding: 6px 8px;
+    width: 80%;
+    width: calc(100% - 50px);
+    border: 1px solid rgba(0,0,0,.1);
+}
+.blogSidebar button{
+    background-color: var(--primary-color);
+    border: none;
+    -webkit-border-radius: 0;
+    -moz-border-radius: 0;
+    border-radius: 0;
+    color: #fff;
+    cursor: pointer;
+    font-size: 18px;
+    height: 40px;
+    margin-left: -1px;
+    outline: medium;
+    right: 0;
+    width: 50px;
+    -webkit-transition: all 300ms ease-out 0s;
+    -moz-transition: all 300ms ease-out 0s;
+    -o-transition: all 300ms ease-out 0s;
+    -ms-transition: all 300ms ease-out 0s;
+    transition: all 300ms ease-out 0s;
+}
+.blogSidebar button:hover{
+    background: #383838;
+}
+.blogSidebar .title{
+    background-color: #fafafa;
+    border: 1px solid rgba(0,0,0,.06);
+    font-weight: 500;
+    line-height: 24px;
+    letter-spacing: 1px;
+    margin-bottom: 20px;
+    padding: 10px 0;
+    position: relative;
+    text-align: center;
+    text-transform: uppercase;
+    font-size: 16px;
+    font-weight: 600;
+}
+.blogSidebar .p-s-post h5{
+    cursor: pointer;
+    transition-property: color;
+    transition-duration: .2s;
+    transition-timing-function: linear;
+    color: #333;
+    font-size: 16px;
+    transition: color .3s ease-in;
+}
+.blogSidebar .p-s-post h5:hover{
+    color: var(--primary-color);
+}
+.blogSidebar .p-s-post span{
+    color: #949494;
+    font-size: 11px;
+    letter-spacing: .2px;
+    line-height: 20px;
+}
+
+.blogSidebar .category-list li{
+    border-bottom: 1px dotted #eee;
+    padding: 9px 0 10px 20px;
+}
+.blogSidebar .category-list li a{
+    cursor: pointer;
+    transition-property: color;
+    transition-duration: .2s;
+    transition-timing-function: linear;
+}
+.blogSidebar .category-list li a:hover{
+   color: var(--primary-color);
+}

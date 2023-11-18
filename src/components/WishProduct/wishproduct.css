@@ -1,0 +1,28 @@
+.wishContainer{
+    background: #fff;
+    padding: 30px;
+    margin-bottom: 25px;
+}
+.tableDiv{
+    overflow-x: auto;
+}
+.wishContainer table{
+    margin-top: 30px;
+}
+.wishContainer td img{
+    width: 100px;
+    height: 100px;
+}
+.wishContainer td,th{
+    vertical-align: middle;
+    padding: 12px;
+}
+.wishContainer td span{
+    color: var(--primary-color);
+    cursor: pointer;
+    font-weight: 600;
+}
+.wishContainer td i{
+    cursor: pointer;
+    color: red;
+}

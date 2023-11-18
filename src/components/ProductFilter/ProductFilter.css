@@ -1,0 +1,38 @@
+.pFContainer input{
+    padding: 2px 11px;
+    outline: none;
+    margin-bottom: 25px;
+}
+.pFContainer .category{
+    font-size: 22px;
+    margin: 20px 0;
+}
+.pFContainer ul li{
+    font-size: 18px;
+    margin-bottom: 10px;
+    cursor: pointer;
+}
+.pFContainer .price h4{
+    font-size: 20px;
+}
+.pFContainer .price h5{
+    font-size: 18px;
+}
+.pFContainer .clearButton{
+  padding: 8px 10px;
+  margin-top: 15px;
+  background: var(--primary-color);
+  border: 1px solid var(--primary-color);
+  color: #fff;
+  font-size: 14px;
+  word-spacing: 2px;
+  font-weight: 500;
+}
+
+
+@media screen and (max-width: 600px) {
+    .pFContainer{
+        text-align: center;
+        margin-bottom: 1rem;
+    }
+}

@@ -1,0 +1,20 @@
+.paginationContainer ul li span{
+    color: #777;
+    font-size: 18px;
+    color: #808080;
+    padding: 5px 20px;
+    border-radius: 0 !important;
+    border: 1px solid #e6e6e6;
+}
+.paginationContainer ul li span:hover{
+ color: #fff;
+ background-color: #999;
+}
+
+@media screen and (max-width: 768px) {
+    .paginationContainer ul{
+        display: grid;
+        grid-template-columns: repeat(3,1fr);
+        grid-gap: 10px 0;
+    }
+}

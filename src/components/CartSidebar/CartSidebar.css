@@ -1,0 +1,40 @@
+.cartsidebar{
+    border: 1px solid rgba(0,0,0,.06);
+    height: 35vh;
+    padding: 1rem;
+    background: #fff;
+}
+.cartsidebar h2{
+    font-weight: 200;
+    font-size: 30px;
+    text-transform: uppercase;
+    margin-bottom: 40px;
+}
+.cartsidebar h6{
+    font-size: 18px;
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 30px;
+}
+.cartsidebar button{
+    padding: 8px 30px;
+    border: none;
+    background: var(--primary-color);
+    color: #fff;
+    font-weight: 600;
+    width: 100%;
+    margin-top: 15px;
+    text-transform: uppercase;
+}
+
+@media screen and (max-width: 992px) {
+    .cartsidebar{
+        height: 28vh;
+    }
+}
+
+@media screen and (max-width: 600px) {
+    .cartsidebar{
+        height: 40vh;
+    }
+}

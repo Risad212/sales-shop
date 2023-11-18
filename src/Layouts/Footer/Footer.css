@@ -1,0 +1,122 @@
+footer {
+    padding: 4em 0;
+    background-color: #0e1418;
+    color: #fff;
+}
+
+footer .gel_col {
+    padding-right: 7.5px;
+    padding-left: 7.5px;
+    margin-bottom: 15px;
+}
+
+footer h4 {
+    font-size: 18px;
+}
+
+footer .unstyle-link li {
+    margin-bottom: 10px;
+}
+
+footer .col-lg-2 {
+    padding: 0 40px;
+}
+
+footer .unstyle-link li,
+.unstyle-link a,
+.unstyle-link p {
+    color: #afb4bf;
+    font-size: 14px;
+}
+
+footer .btn {
+    font-size: .8rem;
+    text-transform: uppercase;
+    letter-spacing: .2rem;
+    padding: 8px 20px;
+    font-size: 12px;
+    color: #fff;
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+    border-radius: 0px;
+    margin-left: -10px;
+}
+
+footer form {
+    position: relative;
+}
+
+footer .form-control {
+    width: 80%;
+    height: 46px;
+    background-color: #3e525f;
+    border-radius: 30px;
+    border: none;
+    padding: 0 20px;
+    color: #fff;
+    font-size: 14px;
+
+}
+
+footer form button {
+    position: absolute;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: none;
+    top: 3px;
+    right: 88px;
+    color: #fff;
+    background-color: var(--primary-color);
+    cursor: pointer;
+}
+
+footer form button i {
+    transform: translateX(-2px);
+}
+
+footer .form-control:focus {
+    background-color: #3e525f;
+    color: #fff;
+}
+
+footer p {
+    color: #afb4bf;
+}
+
+.copy-right {
+    background-color: #0e2737;
+    padding: 15px 0;
+    border-top: 1px solid #273d4b;
+}
+
+.copy-right p {
+    font-size: 14px;
+    color: #afb4bf;
+    font-weight: 500;
+}
+
+.copy-right p a {
+    color: #afb4bf;
+}
+footer .unstyle-link li strong{
+    margin-right: 5px;
+}
+/*=============== Footer Responsive Mobile =============== */
+@media screen and (max-width: 992px) {
+    footer .col-lg-2 {
+        padding: 0 15px;
+    }
+}
+
+/*=============== Footer Responsive Mobile =============== */
+@media screen and (max-width: 767px) {
+    footer {
+        padding: 2em 0;
+    }
+
+    .footer-img-list {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+    }
+}

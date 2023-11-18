@@ -1,0 +1,16 @@
+.card-body button:hover{
+    background: var(--primary-color);
+    border-color: var(--primary-color);
+}
+.card-body button{
+    border-radius: 0px;
+}
+.card-body button i{
+    font-size: 17px;
+}
+.card-body button:nth-last-child() i:hover{
+    color: #fff;
+}
+.fa-solid .fa-heart{
+    color: var(--primary-color);
+}

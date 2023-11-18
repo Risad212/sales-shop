@@ -1,0 +1,63 @@
+.productInfo {
+    padding: 5rem 0;
+}
+
+.productInfo span {
+    font-size: 20px;
+    display: block;
+}
+
+.productInfo p {
+    font-size: 18px;
+    font-weight: 400;
+    line-height: 1.5;
+}
+.productInfo button{
+    border-color: var(--primary-color);
+}
+.productInfo button:hover {
+    background: var(--primary-color);
+    color: #fff;
+    border-color: var(--primary-color);
+}
+
+.productInfo .increDicrement button {
+    font-size: 30px;
+    border: none;
+    background: none;
+    font-weight: 500;
+}
+
+.productInfo .increDicrement button:hover {
+    color: #000;
+}
+
+.productInfo .increDicrement span {
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    border: 1px solid var(--primary-color);;
+    padding: 0 5px;
+    margin: 0px 8px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.producDetails img{
+    width: 75%;
+    text-align: center;
+}
+
+
+@media screen and (max-width: 992px) {
+    .productInfo{
+        padding: 2rem 0;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .producDetails img{
+        width: 100%;
+    }
+}

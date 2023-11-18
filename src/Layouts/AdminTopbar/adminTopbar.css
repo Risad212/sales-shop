@@ -1,0 +1,43 @@
+.adminTopbar{
+    background: #fff;
+    -webkit-box-shadow: 0px 0px 15px -10px rgba(0, 0, 0, 0.75);
+    box-shadow: 0px 0px 15px -10px rgba(0, 0, 0, 0.75);
+    padding: 15px 0;
+}
+.adminTopbar .topContainer{
+   display: flex;
+   justify-content: end;
+   align-items: center;
+   margin-right: 100px;
+}
+.adminTopbar .topbarIcon{
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+.adminTopbar .topbarIcon div{
+    margin-right: 12px;
+}
+.adminTopbar .topbarIcon div:nth-child(2){
+    margin-right: 5px;
+}
+.adminTopbar .topbarIcon div:nth-child(3){
+    margin-right: 5px;
+}
+.adminTopbar .notification{
+    position: relative;
+}
+.adminTopbar .notification span{
+    position: absolute;
+    background: red;
+    width: 20px;
+    height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    border-radius: 50%;
+    left: 13px;
+    top: -5px;
+    font-size: 10px;
+}
