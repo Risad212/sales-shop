@@ -40,7 +40,7 @@ const Product = ({ item}) => {
                              col-md-6 col-sm-12 mb-4`} key={item?.id}>
                 <div class="card h-100 text-center p-4">
                     <Link to={'/product/' + item?.id}>
-                        <img src={item?.image} class="card-img-top" alt={item?.title} height="250px" />
+                        <img src={item?.image} class="card-img-top" alt={item?.title} height="200px" />
                     </Link>
                     <div class="card-body">
                         <h5 class="card-title fw-bold">{item?.title.substring(0, 12)}</h5>
