@@ -18,7 +18,7 @@ const AdminTopbar = () => {
                           <div className="setting">
                              
                           </div>
-                          <img alt="Remy Sharp" src={Profile} />
+                          
                     </div>
                 </div>
             </div>

@@ -13,7 +13,7 @@ const DashboardLayout = () => {
                     <AdminSidebar />
                 </div>
                 <div className="col-lg-10">
-                    <AdminTopbar />
+                    {/* <AdminTopbar /> */}
                     <Outlet />
                 </div>
             </div>
