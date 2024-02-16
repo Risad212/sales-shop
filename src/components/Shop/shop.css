@@ -1,14 +1,24 @@
 .shop{
-    margin: 5rem;
+    margin-top: 5rem;
+    margin-bottom: 3rem;
 }
 .shop h2{
     font-weight: 500;
     text-transform: none;
-    font-size: 2.5rem;
+    font-size: 35px;
     line-height: 3.125rem !important;
     letter-spacing: -.029rem;
     color: #2c2a2a;
     padding: 0 15px 19px;
+    font-weight: 500;
+    text-align: center;
+}
+.shop .border{
+    height: 4px;
+    width: 100px;
+    background: var(--primary-color);
+    margin: auto;
+    margin-bottom: 35px;
 }
 .shop ul{
     display: flex;

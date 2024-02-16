@@ -28,7 +28,8 @@ const Products = () => {
   return (
     <div className='shop'>
       <div className='container'>
-        <h2>Best selling items</h2>
+        <h2>Featured Products</h2>
+         <div className="border"></div>
         <div className="row">
           {
             item ?
