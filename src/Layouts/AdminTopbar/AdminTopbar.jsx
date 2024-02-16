@@ -7,18 +7,12 @@ const AdminTopbar = () => {
         <>
             <div className="adminTopbar">
                 <div className="topContainer">
-                    <div className="topbarIcon">
-                         <div className="notification">
-                             <i class="fa-solid fa-bell"></i>
-                             <span>2</span>
-                         </div>
-                          <div className="language">
-                            
-                          </div>
-                          <div className="setting">
-                             
-                          </div>
-                          
+                   <div className="topbarLeft">
+                      <input type="text" placeholder='Search'/>
+                   </div>
+                    <div className="topbarRight">
+                        <span className='bellIcon'><i class="fa-regular fa-bell"></i></span>
+                        <div className="imageWrapper"><img className='adminImage' src={Profile} alt="" /></div>
                     </div>
                 </div>
             </div>

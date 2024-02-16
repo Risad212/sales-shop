@@ -6,38 +6,45 @@
 }
 .adminTopbar .topContainer{
    display: flex;
-   justify-content: end;
+   justify-content: space-between;
    align-items: center;
    margin-right: 100px;
+   padding: 0 25px;
 }
-.adminTopbar .topbarIcon{
-    position: relative;
+
+.adminTopbar .topbarLeft input{
+    outline: none;
+    border: 1px solid #ccc;
+    padding: 6px 10px;
+    width: 300px;
+    border-radius: 5px;
+    font-size: 14px;
+}
+
+.adminTopbar .topbarRight{
     display: flex;
-    align-items: center;
 }
-.adminTopbar .topbarIcon div{
-    margin-right: 12px;
-}
-.adminTopbar .topbarIcon div:nth-child(2){
-    margin-right: 5px;
-}
-.adminTopbar .topbarIcon div:nth-child(3){
-    margin-right: 5px;
-}
-.adminTopbar .notification{
-    position: relative;
-}
-.adminTopbar .notification span{
-    position: absolute;
-    background: red;
-    width: 20px;
-    height: 20px;
+
+.adminTopbar .topbarRight .bellIcon{
+    width: 2.5rem;
+    height: 2.5rem;
+    background: #637381;
     display: flex;
     align-items: center;
     justify-content: center;
-    color: #fff;
     border-radius: 50%;
-    left: 13px;
-    top: -5px;
-    font-size: 10px;
+    color: #dedede;
+}
+
+.adminTopbar .topbarRight .imageWrapper{
+    width: 2.5rem;
+    height: 2.5rem;
+    margin-left: 5px;
+}
+
+.adminTopbar .topbarRight .adminImage{
+    object-fit: cover;
+    height: 100%;
+    width: 100%;
+    border-radius: 50%;
 }

@@ -8,12 +8,12 @@ import './dashboardlayout.css';
 const DashboardLayout = () => {
     return (
         <>
-            <div className="row">
-                <div className="col-lg-2">
+            <div className="dashbaord-main">
+                <div className="Sidebar">
                     <AdminSidebar />
                 </div>
-                <div className="col-lg-10">
-                    {/* <AdminTopbar /> */}
+                <div className="dashboard-content">
+                    <AdminTopbar />
                     <Outlet />
                 </div>
             </div>

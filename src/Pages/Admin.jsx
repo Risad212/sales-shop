@@ -1,9 +1,10 @@
 import React from 'react';
+import FeatureCard from '../components/featureCard/FeatureCard';
 
 const Admin = () => {
     return (
         <>
-         <h2>admin home</h2> 
+          <FeatureCard />
         </>
     );
 };

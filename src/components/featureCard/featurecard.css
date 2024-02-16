@@ -1,0 +1,31 @@
+.feature-area{
+    margin-top: 25px;
+    padding: 0 25px;
+}
+
+.feature-area .card{
+    box-shadow: 0 3px 10px rgb(0 0 0 / 9%);
+    border: none;
+}
+
+.feature-area .card .card-title{
+    font-size: 22px;
+    font-weight: 900;
+    text-transform: capitalize;
+}
+
+.feature-area .card .icon-shape{
+    background-color: #e0fcc9;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: var(--primary-color);
+}
+
+.feature-area .card .card-number{
+    font-size: 20px;
+    font-weight: 600;
+}
