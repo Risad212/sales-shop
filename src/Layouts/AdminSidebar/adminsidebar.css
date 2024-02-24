@@ -13,47 +13,18 @@
     font-size: 25px;
     color: #fff;
 }
-.adminSidebar ul{
+.adminSidebar .siderMenuList{
     margin-top: 14px;
 }
-.adminSidebar ul li{
-    padding: 15px 1.5rem;
-    align-items: center;
-    font-size: 16px;
+
+.adminSidebar .nav-item{
+    margin-bottom: 15px;
+}
+.adminSidebar .sidebar-icon{
+    margin-right: 1rem;
     color: #fff;
-    text-transform: capitalize;
 }
 
-.adminSidebar .dropdown{
-    cursor: pointer;
-    overflow: hidden;
-    padding: 8px 1.5rem;
-}
-
-.adminSidebar ul li i{
-    margin-right: 15px;
-}
-
-.adminSidebar .dropdownmenu li{
-    padding: 8px 1.5rem;
-}
-
-.adminSidebar .dropdownmenu li .dropdown-item{
+.adminSidebar .sidebar-text{
     color: #fff;
-    padding: 0;
-    font-size: 14px;
-}
-
-.adminSidebar .dropdown-item:focus, .dropdown-item:hover{
-    background: none;
-}
-
-.adminSidebar .dropdown i:nth-child(2){
-    margin-left: 30px;
-    transform: rotate(180deg);
-}
-
-.adminSidebar .dropdownmenu{
-   margin-top: 0;
-   margin-left: 20px;
 }
