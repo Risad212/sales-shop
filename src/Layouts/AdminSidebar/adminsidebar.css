@@ -1,35 +1,104 @@
-.adminSidebar{
-   background: #262b40;
-   height: 100vh;
-   box-shadow: 0 0.125rem 9.375rem rgba(90,97,105,.1), 0 0.25rem 0.5rem rgba(90,97,105,.12), 0 0.9375rem 1.375rem rgba(90,97,105,.1), 0 0.4375rem 2.1875rem rgba(165,182,201,.1);
+.adminSidebar {
+    background: #262b40;
+    height: 100vh;
+    box-shadow: 0 0.125rem 9.375rem rgba(90, 97, 105, .1), 0 0.25rem 0.5rem rgba(90, 97, 105, .12), 0 0.9375rem 1.375rem rgba(90, 97, 105, .1), 0 0.4375rem 2.1875rem rgba(165, 182, 201, .1);
 }
+
 .adminSidebar .logo {
     text-align: center;
     padding-top: 22px;
     border-bottom: 1px solid #555;
     padding-bottom: 18px;
 }
-.adminSidebar .logo h3{
+
+.adminSidebar .logo h3 {
     font-size: 25px;
     color: #fff;
 }
-.adminSidebar .siderMenuList{
+
+.adminSidebar .siderMenuList {
     margin-top: 14px;
 }
-.adminSidebar .nav-link{
-    margin-bottom: 15px;
+
+.adminSidebar .nav-item{
+    margin-bottom: 12px;
+}
+.adminSidebar .nav-link {
     transition: all .3s;
     border-radius: 15px;
-}
-.adminSidebar .nav-link:hover{
-    background-color: #2e3650;
-}
-.adminSidebar .sidebar-icon{
-    margin-right: 1rem;
-    color: #fff;
+    font-size: 15px;
 }
 
-.adminSidebar .sidebar-text{
+.adminSidebar .nav-link:hover {
+    background-color: #2e3650;
+}
+
+.adminSidebar .sidebar-icon {
+    margin-right: 10px;
+    color: #fff;
+    font-size: 15px;
+}
+
+.adminSidebar .sidebar-text {
     color: #fff;
     text-transform: capitalize;
+}
+
+.adminSidebar .accordion-item {
+    background: none;
+    border: none;
+}
+
+.adminSidebar .angle-icon {
+    display: block;
+    margin-left: auto;
+    transition: transform .4s;
+    margin-right: 15px;
+}
+
+.adminSidebar .accordion-button {
+    background: none;
+    color: #fff;
+    padding: 1rem 0;
+    font-size: 15px;
+    text-transform: capitalize;
+}
+
+.adminSidebar .accordion-button:not(.collapsed) {
+    box-shadow: none;
+}
+
+.adminSidebar .accordion-button:not(.collapsed)::after {
+    background-image: none;
+}
+
+.adminSidebar .accordion-button::after {
+    background: none;
+    margin: unset;
+    width: unset;
+}
+
+.adminSidebar .collapsed .angle-icon {
+    transform: rotate(180deg)
+}
+
+.adminSidebar .accordion-body{
+    padding: 10px 1.25rem;
+}
+
+.adminSidebar .accordion-header{
+    display: flex;
+    align-items: center;
+    padding-left: 15px;
+    transition: all .4s;
+    border-radius: 15px;
+    font-size: 15px;
+}
+.adminSidebar .accordion-header:hover{
+    background-color: #2e3650;
+}
+
+.adminSidebar .accordion-button:focus{
+    border: none;
+    box-shadow: none;
 }
