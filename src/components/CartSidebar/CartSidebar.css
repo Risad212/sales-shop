@@ -1,6 +1,5 @@
 .cartsidebar{
     border: 1px solid rgba(0,0,0,.06);
-    height: 35vh;
     padding: 1rem;
     background: #fff;
 }
@@ -25,8 +24,11 @@
     width: 100%;
     margin-top: 15px;
     text-transform: uppercase;
+    transition: all .4s;
 }
-
+.cartsidebar button:hover{
+    background: #000;
+}
 @media screen and (max-width: 992px) {
     .cartsidebar{
         height: 28vh;

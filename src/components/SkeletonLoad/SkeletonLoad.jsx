@@ -81,6 +81,40 @@ export default function ({ type }) {
             </div>
         )
     }
+    else if (type === 'productCollection') {
+        return (
+            <div className="row">
+                <div className="col-lg-3">
+                    <div className="box">
+                        <SkeletonTheme baseColor="#ddd" highlightColor="#f5f6f6" height="300px">
+                            <Skeleton />
+                        </SkeletonTheme>
+                    </div>
+                </div>
+                <div className="col-lg-3">
+                    <div className="box">
+                        <SkeletonTheme baseColor="#ddd" highlightColor="#f5f6f6" height="300px">
+                            <Skeleton />
+                        </SkeletonTheme>
+                    </div>
+                </div>
+                <div className="col-lg-3">
+                    <div className="box">
+                        <SkeletonTheme baseColor="#ddd" highlightColor="#f5f6f6" height="300px">
+                            <Skeleton />
+                        </SkeletonTheme>
+                    </div>
+                </div>
+                <div className="col-lg-3">
+                    <div className="box">
+                        <SkeletonTheme baseColor="#ddd" highlightColor="#f5f6f6" height="300px">
+                            <Skeleton />
+                        </SkeletonTheme>
+                    </div>
+                </div>
+            </div>
+        )
+    }
 };
 
 

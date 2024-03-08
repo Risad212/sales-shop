@@ -7,7 +7,7 @@ const ShopProduct = ({ allProduct,loadStatus }) => {
     return (
         <>
             {
-                allProduct ?
+                allProduct &&
                     allProduct.map((product) => {
                         return (
                             <>
@@ -15,8 +15,6 @@ const ShopProduct = ({ allProduct,loadStatus }) => {
                             </>
                         )
                     })
-                    :
-                    ''
             }
             {
              loadStatus? <SkeletonLoad type="shop"/>: ''

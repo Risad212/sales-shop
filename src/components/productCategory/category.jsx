@@ -4,8 +4,6 @@ import { Link } from 'react-router-dom';
 import { categoryData } from '../../fakeData/FakeData';
 
 function category() {
-
-    console.log(categoryData);
     return (
         <>
             <section className='product-category'>
@@ -20,7 +18,7 @@ function category() {
                                         <div className="col-lg-3">
                                             <img className='img-fluid' src={category?.img} alt="" />
                                             <h4 className='category-title'>{category?.title}</h4>
-                                            <Link className='category-button' to="#">see collection</Link>
+                                            <Link className='category-button' to={'/category/' + category?.category}>see collection</Link>
                                         </div>
                                     </>
                                 )

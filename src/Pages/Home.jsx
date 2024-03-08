@@ -11,8 +11,8 @@ const Home = () => {
             <Bannercarousel />
              <ProductCategory />
             <Shop />
-            <CallToAction />
             <ProductFeature />
+            <CallToAction />
         </>
     );
 };

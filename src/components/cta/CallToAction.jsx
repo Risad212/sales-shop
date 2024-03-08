@@ -8,9 +8,8 @@ const CallToAction = () => {
             <section className='callToAction'>
                 <div className="container">
                     <div className="content-wrapper">
-                        <h3 className='cta-title'>Our best content every month
-                            In your mailbox</h3>
-                        <Link className='cta-btn' to="#">Call To Action</Link>
+                        <h3 className='cta-title'>SALE UP TO 70% OFF FOR ALL FASHION ITEMS, ON ALL BRANDS.</h3>
+                        <Link className='cta-btn' to="/contact">Call To Action</Link>
                     </div>
                 </div>
             </section>

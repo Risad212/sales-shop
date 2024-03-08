@@ -1,4 +1,4 @@
-export const FakeData = [
+export const BlogData = [
     {
         img: 'https://images.macrumors.com/t/Z4nU2dRocDnr4NPvf-sGNedmPGA=/2250x/article-new/2022/01/iOS-App-Store-General-Feature-JoeBlue.jpg',
         date: '2023-03-09T21:39:24Z',
@@ -20,9 +20,6 @@ export const FakeData = [
         title: 'Face ID under the iPhone screen delayed to 2025 or later'
     },
 ]
-
-
-
 
 export const categoryData = [
     {

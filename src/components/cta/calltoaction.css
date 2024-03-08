@@ -1,8 +1,8 @@
 .callToAction{
-    margin-bottom: 25px;
+    margin-bottom: 80px;
 }
 .callToAction .content-wrapper{
-    background-image: url('https://images.pexels.com/photos/1536619/pexels-photo-1536619.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1');
+    background-image: url('../../Media/call-to-action.jpeg');
     background-position: center;
     background-size: cover;
     height: 350px;
@@ -21,11 +21,12 @@
   height: 100%;
   left: 0;
   top: 0;
-  background-color: rgba(23, 23, 23, .57);
+  background-color: rgba(23, 23, 23, 0.348);
   border-radius: 15px;
 }
 .callToAction .cta-title{
     z-index: 9;
+    font-weight: 600;
     font-size: 30px;
     color: #fff;
 }
@@ -37,4 +38,9 @@
     display: block;
     transition: background-color .4s;
     z-index: 9;
+    color: #fff;
+    transition: all .4s;
+}
+.callToAction .cta-btn:hover{
+    background: #000;
 }

@@ -2,7 +2,7 @@ import React, { useContext, useState } from 'react';
 import { Link } from 'react-router-dom';
 import './blogSidebar.css';
 import { StrogeData } from '../../Context';
-import { FakeData } from '../../fakeData/FakeData';
+import { BlogData } from '../../fakeData/FakeData';
 
 const BlogSidebar = () => {
     const [psPost, setPsPost] = useState([1, 2, 3, 4])
@@ -18,7 +18,7 @@ const BlogSidebar = () => {
                 <h3 className='title'>popular post</h3>
                 <div className="p-s-post mt-3">
                     {
-                        FakeData ? FakeData.map((elem) => {
+                        BlogData ? BlogData.map((elem) => {
                             return (
                                 <>
                                     <div className="row mb-3">
@@ -35,7 +35,7 @@ const BlogSidebar = () => {
                             )
                         })
                         :
-                        'popural post not found'
+                        'popular post not found'
                     }
                 </div>
             </div>
