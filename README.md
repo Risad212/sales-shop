@@ -1,4 +1,4 @@
-# Dev-store
+# Sales Shop
 Minimal E-Commerce Website built with React,
 
 ## Overview
