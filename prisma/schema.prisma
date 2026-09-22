@@ -1,0 +1,30 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// Core catalog for the shop + agentic chat search.
+// `embedding` powers semantic search via pgvector (1024-dim, BGE-M3).
+// Requires the `vector` extension — see prisma/extensions.sql.
+model Product {
+  id          Int      @id // Stable ids carried over from the initial catalog snapshot
+  title       String
+  description String   @db.Text
+  price       Float
+  category    String
+  image       String
+  ratingRate  Float    @default(0)
+  ratingCount Int      @default(0)
+  embedding   Unsupported("vector(1024)")?
+  ageGroup    String   @default("all") // kids | teens | adults | seniors | all
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@index([category])
+  @@index([title])
+  @@index([ageGroup])
+}
