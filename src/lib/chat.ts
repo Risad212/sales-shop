@@ -22,6 +22,29 @@ export interface ParsedQuery {
 
 const CATEGORIES = ["men's clothing", "women's clothing", "jewelery", "electronics", "kids", "toys"] as const;
 
+// Family words map to who the gift is for (shopkeeper intuition).
+const FAMILY_AGE: Record<string, string> = {
+  dad: "adults",
+  father: "adults",
+  papa: "adults",
+  mom: "adults",
+  mum: "adults",
+  mother: "adults",
+  mama: "adults",
+  husband: "adults",
+  wife: "adults",
+  grandpa: "seniors",
+  grandfather: "seniors",
+  grandma: "seniors",
+  grandmother: "seniors",
+  son: "kids",
+  daughter: "kids",
+  boy: "kids",
+  girl: "kids",
+  brother: "teens",
+  sister: "teens",
+};
+
 const AGE_ALIASES: Record<string, string> = {
   kids: "kids",
   kid: "kids",
@@ -76,6 +99,8 @@ const STOPWORDS = new Set([
   "like", "just", "really", "very", "much", "many", "do", "does", "can", "could",
   // generic apparel words left over after category detection ("men's clothing")
   "clothing", "clothes", "apparel", "wear", "outfit", "outfits",
+  // filler words in natural requests ("jacket for my dad")
+  "for", "from", "about", "with", "without",
 ]);
 
 function extractPrice(text: string, filters: ChatFilters): string {
@@ -179,6 +204,15 @@ function extractAge(text: string, filters: ChatFilters): string {
       filters.ageGroup = age;
       rest = rest.replace(new RegExp(`\\b${alias}\\b`, "gi"), " ");
       break;
+    }
+  }
+  if (!filters.ageGroup) {
+    for (const [alias, age] of Object.entries(FAMILY_AGE)) {
+      if (lower.includes(` ${alias} `) || lower.includes(` ${alias}'s `)) {
+        filters.ageGroup = age;
+        rest = rest.replace(new RegExp(`\\b${alias}('s)?\\b`, "gi"), " ");
+        break;
+      }
     }
   }
   return rest;

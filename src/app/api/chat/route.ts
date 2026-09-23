@@ -15,9 +15,9 @@ const ChatRequest = z.object({
 });
 
 const GREETING =
-  "Hi! I'm your shopping assistant. Tell me what you're looking for — e.g. \"men's jacket under $60\", \"cheap electronics\", or \"recommend a gift\".";
+  "Hello sir, how may I help you? Tell me who you're shopping for — e.g. \"I need a jacket for my dad\", \"a gift for my daughter\", or \"cheap electronics\".";
 const HELP =
-  "I can search the catalog by keyword, category (men, women, jewelery, electronics, kids, toys), age group (kids, teens, adults, seniors) and price (“under $50”, “between $20 and $100”). Try “suggest top rated” for picks.";
+  "Just tell me in your own words, sir — who it's for and what you need. I know our categories (men, women, jewelery, electronics, kids, toys), ages (kids, teens, adults, seniors) and prices (“under $50”). Try “suggest top rated” for picks.";
 
 async function mockReply(message: string) {
   const parsed = parseMessage(message);
@@ -50,7 +50,7 @@ async function mockReply(message: string) {
 
   if (docs.length === 0) {
     return NextResponse.json({
-      reply: `I couldn't find anything ${where || "matching that"}. Try a different keyword, a wider price range, or another category.`,
+      reply: `Sorry sir, we don't have anything ${where || "like that"} in the shop right now, neither exact nor close. If you tell me a different keyword, a wider price range, or another category, I'll gladly look again.`,
       products: [],
       sources: [],
       interpreted: parsed,
@@ -61,8 +61,8 @@ async function mockReply(message: string) {
 
   const lead =
     parsed.intent === "recommend"
-      ? `Here are my top picks ${where || "for you"}:`
-      : `Found ${docs.length} product${docs.length > 1 ? "s" : ""} ${where}:`;
+      ? `Certainly sir — here are my top picks ${where || "for you"}:`
+      : `Yes sir, I found ${docs.length} product${docs.length > 1 ? "s" : ""} ${where}:`;
 
   return NextResponse.json({
     reply: lead,

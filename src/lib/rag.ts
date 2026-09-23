@@ -28,7 +28,9 @@ export interface Retrieval {
 
 /** Retrieve candidate products for a query + filters.
  * Relaxation chain: full query → drop search text → drop age group.
- * Never returns empty when the catalog has anything in scope. */
+ * Relaxation only applies while filters anchor relevance (category, age or
+ * price) — a pure nonsense query returns [] so the assistant can apologize
+ * instead of dumping random products. */
 export async function retrieve(
   q: ProductQuery,
   limit: number
@@ -37,11 +39,20 @@ export async function retrieve(
     const ranked = await semanticSearchWithScores(q, limit);
     if (ranked && ranked.length > 0) return { docs: ranked.slice(0, limit), via: "keyword" };
   }
-  const attempts: ProductQuery[] = [
-    { ...q },
-    { ...q, search: undefined },
-    { category: q.category, ageGroup: undefined, minPrice: q.minPrice, maxPrice: q.maxPrice },
-  ];
+  const anchored = q.category !== undefined || q.ageGroup !== undefined ||
+    q.minPrice !== undefined || q.maxPrice !== undefined;
+  const attempts: ProductQuery[] = [{ ...q }];
+  if (anchored) {
+    attempts.push({ ...q, search: undefined });
+    if (q.category) {
+      attempts.push({
+        category: q.category,
+        ageGroup: undefined,
+        minPrice: q.minPrice,
+        maxPrice: q.maxPrice,
+      });
+    }
+  }
   for (const attempt of attempts) {
     const products = await queryProducts({ ...attempt, limit });
     if (products.length > 0) {

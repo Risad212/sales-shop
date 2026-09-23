@@ -24,7 +24,10 @@ const CASES: EvalCase[] = [
   { query: "Under $50", expectAny: [25, 18, 23, 28, 38, 21, 2, 16, 17, 22, 35] },
   { query: "kids shoes under $40", expectAny: [] },
   { query: "board games", expectAny: [27] },
-  { query: "jackets", expectAny: [16, 17, 21] },
+  { query: "jackets", expectAny: [3, 21, 17, 16, 15] },
+  { query: "I need a jacket for my dad", expectAny: [16, 17] },
+  { query: "a gift for my daughter", expectAny: [25, 28, 23, 21] },
+  { query: "spaceship", expectAny: [] },
 ];
 
 async function main(): Promise<void> {

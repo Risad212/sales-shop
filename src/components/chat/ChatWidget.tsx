@@ -19,10 +19,10 @@ interface ChatMessage {
 }
 
 const SUGGESTIONS = [
+  "Jacket for my dad",
+  "Gift for my daughter",
   "Under $50",
-  "Men's clothing",
   "Top rated",
-  "Jewelery gifts",
 ];
 
 let nextId = 1;
@@ -67,7 +67,7 @@ export default function ChatWidget() {
     {
       id: 0,
       role: "assistant",
-      text: "Hi! Ask me for products — try “men's jacket under $60” or tap a suggestion below.",
+      text: "Hello sir, how may I help you? Tell me who you're shopping for — try “I need a jacket for my dad” or tap a suggestion below.",
     },
   ]);
   const bottomRef = useRef<HTMLDivElement>(null);
