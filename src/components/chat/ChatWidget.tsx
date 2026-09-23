@@ -18,12 +18,7 @@ interface ChatMessage {
   products?: Product[];
 }
 
-const SUGGESTIONS = [
-  "Jacket for my dad",
-  "Gift for my daughter",
-  "Under $50",
-  "Top rated",
-];
+
 
 let nextId = 1;
 
@@ -157,17 +152,6 @@ export default function ChatWidget() {
           </div>
 
           <div className="border-t bg-white p-2">
-            <div className="mb-2 flex flex-wrap gap-1.5">
-              {SUGGESTIONS.map((s) => (
-                <button
-                  key={s}
-                  onClick={() => send(s)}
-                  className="rounded-full border border-[#6BB42F] px-2.5 py-1 text-[11px] font-medium text-[#5da128] transition hover:bg-[#6BB42F] hover:text-white"
-                >
-                  {s}
-                </button>
-              ))}
-            </div>
             <form
               className="flex gap-2"
               onSubmit={(e) => {
