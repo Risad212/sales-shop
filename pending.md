@@ -23,11 +23,10 @@
   2. `POST /api/chat {"message":"gift for dad who likes tech"}` must return
      `"retrieval":"vector"` with non-null `score` values in `sources`.
 
-## P1 — Ecommerce essentials
-- [x] **Auth** — code-complete: NextAuth credentials, `User`/`Account`/`Session`/
-  `VerificationToken` models, `/login` + `/signup` pages, header session state,
-  JWT role callback. Build green; pages 200; validation + 503-without-DB verified.
-  Live login test waits on P0 database. (Google OAuth: add provider + env later.)
+## P1 — Discovery focus (accounts removed per owner: this is a find-products app)
+- [x] **Auth removed** — NextAuth, user models, login/signup deleted; header
+  action is now Shop Now. Guest cart + wishlist stay in browser.
+  (Re-add later only if orders/accounts are ever needed.)
 - [ ] **Persistent cart** — `CartItem` model (userId, productId, qty); migrate
       `StoreContext` to sync with `/api/cart`; guest cart merges on login.
 - [ ] **Checkout + orders** — `Order`/`OrderItem` models, checkout page (address,

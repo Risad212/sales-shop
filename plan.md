@@ -1,9 +1,10 @@
 # Sales Shop — Full Plan
 
 ## Vision
-Small ecommerce → **agentic commerce**: a RAG-based shop where customers find
-products by chatting (keywords, meaning, age group, price), with open-source
-LLMs in the cloud and Postgres + pgvector as the product brain.
+**Product discovery first**: a RAG-based shop where customers find products by
+chatting (keywords, meaning, age group, price), with open-source LLMs in the
+cloud and Postgres + pgvector as the product brain. No accounts — guest cart
+and wishlist live in the browser.
 
 ## Stack
 | Layer | Choice |

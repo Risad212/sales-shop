@@ -2,8 +2,7 @@
 
 import Link from "next/link";
 import { useMemo } from "react";
-import { Heart, ShoppingCart, Phone, Mail, User as UserIcon, LogOut } from "lucide-react";
-import { signOut, useSession } from "next-auth/react";
+import { Heart, ShoppingCart, Phone, Mail } from "lucide-react";
 import { useStore } from "@/context/StoreContext";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -18,7 +17,6 @@ const NAV = [
 
 export default function Header() {
   const { cart, wishlist } = useStore();
-  const { data: session } = useSession();
 
   const totalPrice = useMemo(
     () => Math.floor(cart.reduce((sum, item) => sum + item.price, 0)),
@@ -60,25 +58,9 @@ export default function Header() {
           </nav>
 
           <div className="flex items-center gap-3">
-            {session?.user ? (
-              <span className="hidden items-center gap-2 sm:inline-flex">
-                <span className="flex items-center gap-1 text-sm font-medium text-neutral-700">
-                  <UserIcon className="h-4 w-4" />
-                  {session.user.name ?? session.user.email}
-                </span>
-                <button
-                  onClick={() => signOut({ callbackUrl: "/" })}
-                  className="flex items-center gap-1 text-sm text-neutral-500 transition hover:text-red-500"
-                  aria-label="Sign out"
-                >
-                  <LogOut className="h-4 w-4" />
-                </button>
-              </span>
-            ) : (
-              <Button variant="brand" size="sm" className="hidden sm:inline-flex" asChild>
-                <Link href="/login">My Account</Link>
-              </Button>
-            )}
+            <Button variant="brand" size="sm" className="hidden sm:inline-flex" asChild>
+              <Link href="/shop">Shop Now</Link>
+            </Button>
             <Link href="/wishlist" className="relative p-1" aria-label="Wishlist">
               <Heart className="h-5 w-5" />
               <Badge className="absolute -right-2 -top-2 flex h-5 w-5 items-center justify-center bg-[#6BB42F] p-0 text-[11px]">
