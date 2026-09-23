@@ -30,12 +30,15 @@ async function main() {
     const vectors = await embedTexts(products.map(productEmbeddingText));
     if (!vectors) throw new Error("Embedding provider returned nothing. Check EMBEDDING_* env vars.");
     for (let j = 0; j < products.length; j++) {
-      if (vectors[j].length !== EMBEDDING_DIMS) {
-        throw new Error(`Dims mismatch: got ${vectors[j].length}, need ${EMBEDDING_DIMS}`);
+      const product = products[j];
+      const vector = vectors[j];
+      if (!product || !vector) throw new Error(`Missing product/vector at batch index ${j}`);
+      if (vector.length !== EMBEDDING_DIMS) {
+        throw new Error(`Dims mismatch: got ${vector.length}, need ${EMBEDDING_DIMS}`);
       }
-      const vec = `[${vectors[j].join(",")}]`;
+      const vec = `[${vector.join(",")}]`;
       await prisma.$executeRaw`
-        UPDATE "Product" SET embedding = CAST(${vec} AS vector) WHERE id = ${products[j].id}
+        UPDATE "Product" SET embedding = CAST(${vec} AS vector) WHERE id = ${product.id}
       `;
     }
     console.log(`  ${Math.min(i + BATCH, missing.length)}/${missing.length}`);

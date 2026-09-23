@@ -3,9 +3,10 @@ import { readFileSync } from "fs";
 import { join } from "path";
 import { getDb } from "./db";
 import { embedTexts } from "./embeddings";
+import { SnapshotSchema, parseAgeGroup } from "./schemas";
 import type { Product } from "@/types";
 
-export function toAppProduct(p: PrismaProduct & { ageGroup: string }): Product {
+export function toAppProduct(p: PrismaProduct): Product {
   return {
     id: p.id,
     title: p.title,
@@ -13,21 +14,9 @@ export function toAppProduct(p: PrismaProduct & { ageGroup: string }): Product {
     description: p.description,
     category: p.category,
     image: p.image,
-    ageGroup: (p.ageGroup ?? "all") as Product["ageGroup"],
+    ageGroup: parseAgeGroup(p.ageGroup),
     rating: { rate: p.ratingRate, count: p.ratingCount },
   };
-}
-
-interface SnapshotItem {
-  id: number;
-  title: string;
-  price: number;
-  description: string;
-  category: string;
-  image: string;
-  ageGroup?: string;
-  ratingRate: number;
-  ratingCount: number;
 }
 
 let snapshotCache: Product[] | null = null;
@@ -36,7 +25,8 @@ let snapshotCache: Product[] | null = null;
 function readSnapshot(): Product[] {
   if (!snapshotCache) {
     const file = join(process.cwd(), "prisma", "catalog.snapshot.json");
-    const items = JSON.parse(readFileSync(file, "utf-8")) as SnapshotItem[];
+    const raw: unknown = JSON.parse(readFileSync(file, "utf-8"));
+    const items = SnapshotSchema.parse(raw);
     snapshotCache = items.map((p) => ({
       id: p.id,
       title: p.title,
@@ -44,11 +34,26 @@ function readSnapshot(): Product[] {
       description: p.description,
       category: p.category,
       image: p.image,
-      ageGroup: (p.ageGroup ?? "all") as Product["ageGroup"],
+      ageGroup: parseAgeGroup(p.ageGroup),
       rating: { rate: p.ratingRate, count: p.ratingCount },
     }));
   }
   return snapshotCache;
+}
+
+/** Naive singularizer so "jackets"/"games" match "jacket"/"game". */
+function singular(word: string): string {
+  return word.length > 3 && word.endsWith("s") && !word.endsWith("ss")
+    ? word.slice(0, -1)
+    : word;
+}
+
+export function searchTokens(search: string): string[] {
+  return search
+    .toLowerCase()
+    .split(/\s+/)
+    .map((w) => singular(w.trim()))
+    .filter((w) => w.length > 1);
 }
 
 function matches(p: Product, q: ProductQuery): boolean {
@@ -57,12 +62,8 @@ function matches(p: Product, q: ProductQuery): boolean {
   if (q.minPrice !== undefined && p.price < q.minPrice) return false;
   if (q.maxPrice !== undefined && p.price > q.maxPrice) return false;
   if (q.search) {
-    const s = q.search.toLowerCase();
-    if (
-      !p.title.toLowerCase().includes(s) &&
-      !p.description.toLowerCase().includes(s)
-    )
-      return false;
+    const hay = `${p.title} ${p.description}`.toLowerCase();
+    if (!searchTokens(q.search).every((t) => hay.includes(t))) return false;
   }
   return true;
 }
@@ -109,8 +110,9 @@ export async function semanticSearchWithScores(
   const db = getDb();
   if (!db || !q.search) return null;
   const vectors = await embedTexts([q.search]);
-  if (!vectors) return null;
-  const vec = `[${vectors[0].join(",")}]`;
+  const first = vectors?.[0];
+  if (!first) return null;
+  const vec = `[${first.join(",")}]`;
   try {
     const conditions: Prisma.Sql[] = [Prisma.sql`embedding IS NOT NULL`];
     if (q.category) conditions.push(Prisma.sql`category = ${q.category}`);
@@ -133,8 +135,8 @@ export async function semanticSearchWithScores(
         price: r.price,
         description: r.description,
         category: r.category,
-        image: r.image,
-        ageGroup: (r.ageGroup ?? "all") as Product["ageGroup"],
+      image: r.image,
+      ageGroup: parseAgeGroup(r.ageGroup),
         rating: { rate: r.ratingRate, count: r.ratingCount },
       },
       score: Math.round((1 / (1 + r.distance)) * 1000) / 1000,
@@ -180,10 +182,12 @@ export async function queryProducts(q: ProductQuery = {}): Promise<Product[]> {
         : {}),
       ...(q.search
         ? {
-            OR: [
-              { title: { contains: q.search, mode: "insensitive" } },
-              { description: { contains: q.search, mode: "insensitive" } },
-            ],
+            AND: searchTokens(q.search).map((t) => ({
+              OR: [
+                { title: { contains: t, mode: "insensitive" as const } },
+                { description: { contains: t, mode: "insensitive" as const } },
+              ],
+            })),
           }
         : {}),
     },
@@ -191,6 +195,24 @@ export async function queryProducts(q: ProductQuery = {}): Promise<Product[]> {
     take: q.limit ?? 50,
   });
   return products.map(toAppProduct);
+}
+
+/**
+ * "You may also like": same category first (excluding self), topped up
+ * with top-rated items from other categories when short.
+ */
+export async function getRelatedProducts(
+  product: Product,
+  limit = 4
+): Promise<Product[]> {
+  const sameCategory = (await queryProducts({ category: product.category, limit: limit + 1 })).filter(
+    (p) => p.id !== product.id
+  );
+  if (sameCategory.length >= limit) return sameCategory.slice(0, limit);
+  const topRated = (await queryProducts({ limit: 20 })).filter(
+    (p) => p.id !== product.id && p.category !== product.category
+  );
+  return [...sameCategory, ...topRated].slice(0, limit);
 }
 
 export async function getProductById(id: number): Promise<Product | null> {

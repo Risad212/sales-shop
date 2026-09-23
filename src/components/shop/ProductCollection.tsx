@@ -8,6 +8,7 @@ import { useStore } from "@/context/StoreContext";
 import ProductSkeleton from "@/components/common/ProductSkeleton";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import { ProductsApiResponseSchema } from "@/lib/schemas";
 
 export default function ProductCollection() {
   const { cart, setCart } = useStore();
@@ -22,8 +23,9 @@ export default function ProductCollection() {
       setIsLoading(true);
       try {
         const res = await fetch(`/api/products?category=${encodeURIComponent(name)}&limit=50`);
-        const data = await res.json();
-        setCollection(data.products ?? []);
+        const data: unknown = await res.json();
+        const parsed = ProductsApiResponseSchema.safeParse(data);
+        setCollection(parsed.success ? parsed.data.products : []);
       } catch {
         setCollection([]);
       } finally {

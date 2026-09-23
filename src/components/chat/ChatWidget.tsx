@@ -8,6 +8,7 @@ import { useStore } from "@/context/StoreContext";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card } from "@/components/ui/card";
+import { ChatApiResponseSchema } from "@/lib/schemas";
 import { cn } from "@/lib/utils";
 
 interface ChatMessage {
@@ -91,14 +92,15 @@ export default function ChatWidget() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ message: trimmed, history }),
       });
-      const data = await res.json();
+      const data: unknown = await res.json();
+      const parsed = ChatApiResponseSchema.safeParse(data);
       setMessages((prev) => [
         ...prev,
         {
           id: nextId++,
           role: "assistant",
-          text: data.reply ?? "Sorry, something went wrong.",
-          products: data.products ?? [],
+          text: parsed.success ? parsed.data.reply : "Sorry, something went wrong.",
+          products: parsed.success ? parsed.data.products : [],
         },
       ]);
     } catch {

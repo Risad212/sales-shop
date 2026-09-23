@@ -10,9 +10,11 @@ description: Work on the AI shopping assistant (chat widget, search parser, LLM 
 ```
 RAG: ChatWidget.tsx → POST /api/chat {message, history}
      → {reply, products, sources[{id,title,price,score}], retrieval, engine}
-  ├─ LLM_API_KEY set → agenticChat() (src/lib/llm.ts): OpenAI-compatible
-  │  chat-completions + search_products tool loop (max 2 rounds) → engine "llm"
+  ├─ LLM_API_KEY set → runLangChainAgent() (src/lib/agent.ts): LangChain v1
+  │  createAgent + ChatGroq + search_products StructuredTool (zod schema),
+  │  tool outputs re-validated into products → engine "llm-langchain"
   │  └─ on any LLM error → falls back to mock (never 500s)
+  (src/lib/llm.ts now holds only config + shared agent types)
   └─ no key → parseMessage() (src/lib/chat.ts) rule parser → engine "mock"
 Both paths retrieve via src/lib/rag.ts (retrieve → vector-first with
 similarity scores, keyword fallback) → Postgres, else local snapshot.

@@ -8,6 +8,7 @@
  * The schema's vector(1024) column must match the model's dimensions.
  * Returns null when not configured — callers fall back to keyword search.
  */
+import { EmbeddingsResponseSchema } from "./schemas";
 
 export const EMBEDDING_DIMS = 1024;
 
@@ -60,15 +61,21 @@ export async function embedTexts(texts: string[]): Promise<number[][] | null> {
       console.error(`Embeddings request failed (${res.status})`);
       return null;
     }
-    const data = await res.json();
-    const vectors = (data?.data ?? []).map((d: { embedding: number[] }) => d.embedding);
-    if (vectors.length !== texts.length || vectors[0]?.length !== EMBEDDING_DIMS) {
+    const data: unknown = await res.json();
+    const parsed = EmbeddingsResponseSchema.safeParse(data);
+    if (!parsed.success) {
+      console.error("Embeddings response failed validation");
+      return null;
+    }
+    const vectors = parsed.data.data.map((d) => d.embedding);
+    const first = vectors[0];
+    if (vectors.length !== texts.length || !first || first.length !== EMBEDDING_DIMS) {
       console.error(
-        `Embedding dims mismatch: got ${vectors[0]?.length}, schema expects ${EMBEDDING_DIMS}`
+        `Embedding dims mismatch: got ${first?.length}, schema expects ${EMBEDDING_DIMS}`
       );
       return null;
     }
-    return vectors as number[][];
+    return vectors;
   } catch (error) {
     console.error("Embeddings request errored:", error);
     return null;

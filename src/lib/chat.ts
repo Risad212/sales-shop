@@ -80,7 +80,7 @@ const STOPWORDS = new Set([
 
 function extractPrice(text: string, filters: ChatFilters): string {
   let rest = text;
-  const money = (s: string) => Number(s.replace(/[$,]/g, ""));
+  const money = (s: string | undefined) => Number((s ?? "0").replace(/[$,]/g, ""));
 
   const between = rest.match(/between\s*\$?([\d,]+)\s*(?:and|to|-)\s*\$?([\d,]+)/);
   if (between) {

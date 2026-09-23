@@ -1,20 +1,15 @@
-export interface Rating {
-  rate: number;
-  count: number;
-}
+import type { z } from "zod";
+import type {
+  AgeGroupSchema,
+  ProductSchema,
+  RatingSchema,
+} from "@/lib/schemas";
 
-export type AgeGroup = "kids" | "teens" | "adults" | "seniors" | "all";
-
-export interface Product {
-  id: number;
-  title: string;
-  price: number;
-  description: string;
-  category: string;
-  image: string;
-  ageGroup: AgeGroup;
-  rating: Rating;
-}
+// Single source of truth lives in src/lib/schemas.ts (zod) — these types
+// can never drift from the runtime validators.
+export type AgeGroup = z.infer<typeof AgeGroupSchema>;
+export type Rating = z.infer<typeof RatingSchema>;
+export type Product = z.infer<typeof ProductSchema>;
 
 export interface BlogPost {
   img: string;

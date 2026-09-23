@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import type { Product } from "@/types";
 import ProductFilter from "./ProductFilter";
 import ShopProduct from "./ShopProduct";
+import { ProductsApiResponseSchema } from "@/lib/schemas";
 
 export default function ShopPage() {
   const [items, setItems] = useState<Product[]>([]);
@@ -15,9 +16,11 @@ export default function ShopPage() {
       setIsLoading(true);
       try {
         const res = await fetch("/api/products?limit=50");
-        const data = await res.json();
-        setItems(data.products ?? []);
-        setAllItems(data.products ?? []);
+        const data: unknown = await res.json();
+        const parsed = ProductsApiResponseSchema.safeParse(data);
+        const list = parsed.success ? parsed.data.products : [];
+        setItems(list);
+        setAllItems(list);
       } catch {
         setItems([]);
       } finally {

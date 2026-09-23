@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { z } from "zod";
 import { parseMessage, describeFilters } from "@/lib/chat";
-import { agenticChat } from "@/lib/llm";
+import { runLangChainAgent } from "@/lib/agent";
 import { retrieve, toProducts, toSources } from "@/lib/rag";
 
 const HistoryTurn = z.object({
@@ -78,13 +78,13 @@ export async function POST(req: Request) {
   try {
     const body = ChatRequest.parse(await req.json());
 
-    // Agentic RAG path: cloud-hosted open-source LLM grounded on retrieval.
+    // Agentic RAG path: LangChain (ChatGroq + search_products tool).
     if (process.env.LLM_API_KEY) {
       try {
-        const result = await agenticChat(body.message, body.history ?? []);
-        return NextResponse.json({ ...result, engine: "llm" });
+        const result = await runLangChainAgent(body.message, body.history ?? []);
+        return NextResponse.json({ ...result, engine: "llm-langchain" });
       } catch (llmError) {
-        console.error("LLM agent failed, falling back to mock parser:", llmError);
+        console.error("LangChain agent failed, falling back to mock parser:", llmError);
       }
     }
 

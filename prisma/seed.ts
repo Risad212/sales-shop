@@ -7,27 +7,17 @@
 import { readFileSync } from "fs";
 import { join } from "path";
 import { PrismaClient } from "@prisma/client";
+import { SnapshotSchema } from "../src/lib/schemas";
 
 const prisma = new PrismaClient();
-
-interface SnapshotItem {
-  id: number;
-  title: string;
-  price: number;
-  description: string;
-  category: string;
-  image: string;
-  ageGroup?: string;
-  ratingRate: number;
-  ratingCount: number;
-}
 
 async function main() {
   if (!process.env.DATABASE_URL) {
     throw new Error("DATABASE_URL is not set. Copy .env.example to .env first.");
   }
   const file = join(__dirname, "catalog.snapshot.json");
-  const items = JSON.parse(readFileSync(file, "utf-8")) as SnapshotItem[];
+  const raw: unknown = JSON.parse(readFileSync(file, "utf-8"));
+  const items = SnapshotSchema.parse(raw);
 
   for (const item of items) {
     await prisma.product.upsert({

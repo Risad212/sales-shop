@@ -8,23 +8,41 @@ import Rating from "./Rating";
 import ProductSkeleton from "@/components/common/ProductSkeleton";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import { ProductApiResponseSchema, ProductsApiResponseSchema } from "@/lib/schemas";
+import ProductCard from "./ProductCard";
+import SectionHeading from "@/components/common/SectionHeading";
 
 export default function ProductDetails() {
   const { cart, setCart } = useStore();
   const params = useParams<{ id: string }>();
   const id = params?.id;
   const [item, setItem] = useState<Product | null>(null);
+  const [related, setRelated] = useState<Product[]>([]);
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     if (!id) return;
     const getProduct = async () => {
       setIsLoading(true);
+      setRelated([]);
       try {
         const res = await fetch(`/api/products/${id}`);
         if (!res.ok) throw new Error("not found");
-        const data = await res.json();
-        setItem(data.product as Product);
+        const data: unknown = await res.json();
+        const parsed = ProductApiResponseSchema.safeParse(data);
+        if (!parsed.success) throw new Error("bad product payload");
+        setItem(parsed.data.product);
+        // Related items: same category, excluding self.
+        const rel = await fetch(
+          `/api/products?category=${encodeURIComponent(parsed.data.product.category)}&limit=5`
+        );
+        const relData: unknown = await rel.json();
+        const relParsed = ProductsApiResponseSchema.safeParse(relData);
+        if (relParsed.success) {
+          setRelated(
+            relParsed.data.products.filter((p) => p.id !== parsed.data.product.id).slice(0, 4)
+          );
+        }
       } catch {
         setItem(null);
       } finally {
@@ -72,6 +90,16 @@ export default function ProductDetails() {
           </Button>
         </div>
       </div>
+      {related.length > 0 && (
+        <div className="mt-12">
+          <SectionHeading title="You May Also Like" />
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
+            {related.map((p) => (
+              <ProductCard key={p.id} item={p} />
+            ))}
+          </div>
+        </div>
+      )}
     </div>
   );
 }

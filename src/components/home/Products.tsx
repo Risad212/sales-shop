@@ -5,6 +5,7 @@ import type { Product } from "@/types";
 import ProductCard from "@/components/product/ProductCard";
 import SectionHeading from "@/components/common/SectionHeading";
 import ProductSkeleton from "@/components/common/ProductSkeleton";
+import { ProductsApiResponseSchema } from "@/lib/schemas";
 
 export default function Products() {
   const [products, setProducts] = useState<Product[]>([]);
@@ -15,8 +16,9 @@ export default function Products() {
       setIsLoading(true);
       try {
         const res = await fetch("/api/products?limit=8");
-        const data = await res.json();
-        setProducts(data.products ?? []);
+        const data: unknown = await res.json();
+        const parsed = ProductsApiResponseSchema.safeParse(data);
+        setProducts(parsed.success ? parsed.data.products : []);
       } catch {
         setProducts([]);
       } finally {

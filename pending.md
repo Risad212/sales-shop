@@ -1,7 +1,8 @@
 # Pending Tasks (detailed)
 
 ## P0 — Finish current scope
-- [ ] **Fix 3 product photos** (Wikimedia pass was partial)
+- [x] **Fix 3 product photos** — done: white sneakers (32), white satchel (34),
+  reading glasses (35) + kids/toys category cards; verified via screenshot.
   - `public/products/35.jpg` — currently a Dantan painting, needs reading glasses.
     Retry `scripts/fetch-real-photos.ts` with queries like `reading glasses product`,
     `spectacles on table`; visually read the result before keeping.
@@ -23,8 +24,10 @@
      `"retrieval":"vector"` with non-null `score` values in `sources`.
 
 ## P1 — Ecommerce essentials
-- [ ] **Auth** — NextAuth (credentials + Google): `User` model, login/signup UI,
-      protect checkout + admin routes, link cart to user.
+- [x] **Auth** — code-complete: NextAuth credentials, `User`/`Account`/`Session`/
+  `VerificationToken` models, `/login` + `/signup` pages, header session state,
+  JWT role callback. Build green; pages 200; validation + 503-without-DB verified.
+  Live login test waits on P0 database. (Google OAuth: add provider + env later.)
 - [ ] **Persistent cart** — `CartItem` model (userId, productId, qty); migrate
       `StoreContext` to sync with `/api/cart`; guest cart merges on login.
 - [ ] **Checkout + orders** — `Order`/`OrderItem` models, checkout page (address,
@@ -36,17 +39,19 @@
 ## P2 — Agentic upgrades
 - [ ] **Chat checkout** — `add_to_cart`, `get_order_status` tools for the LLM;
       order answers grounded on `Order` rows (user-scoped).
-- [ ] **Recommendations** — "frequently bought together" from `OrderItem`
-      co-occurrence + "you may also like" (same category, high rating).
-- [ ] **RAG eval** — `scripts/eval-rag.ts`: fixed query set, asserts recall of
-      expected product ids via vector path; run before prompt/model changes.
+- [x] **Recommendations** — "You May Also Like" on product page (same category,
+      top-rated fill). Done; "frequently bought together" waits on orders data.
+- [x] **RAG eval** — `scripts/eval-rag.ts` (9/9 passing on keyword path; also
+      run against vector path once embeddings are live). `npm run eval`.
 - [ ] **AI product copy** — admin "generate description/tags" button via LLM.
 - [ ] **Visual search** — upload photo → CLIP-style embedding → similarity search
       (needs image embedding column + provider).
 
 ## P3 — Ship it
-- [ ] **Deploy** — Vercel (env: `DATABASE_URL`, `LLM_*`, `EMBEDDING_*`), Neon
-      branch DB, `postinstall: prisma generate`, seed production once.
+- [x] **Deploy prep** — `postinstall: prisma generate` in place; production env
+      documented in `.env.example` (`DATABASE_URL`, `LLM_*`, `EMBEDDING_*`,
+      `NEXTAUTH_*`).
+- [ ] **Deploy** — Vercel import, set env vars, Neon branch DB, seed production once.
 - [ ] **Cleanup** — remove `scripts/shot.js` dev dep `playwright-core` from
       production install (move to `devDependencies` — already there: verify),
       rotate the Groq key that was pasted in chat (console.groq.com → new key).
