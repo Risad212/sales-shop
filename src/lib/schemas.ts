@@ -40,7 +40,7 @@ export const ChatApiResponseSchema = z.object({
   products: z.array(ProductSchema),
 }).passthrough();
 
-/** One entry of prisma/catalog.snapshot.json. */
+/** One entry of src/data/catalog.json. */
 export const SnapshotItemSchema = z.object({
   id: z.number(),
   title: z.string(),

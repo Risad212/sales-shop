@@ -1,53 +1,42 @@
-# Sales Shop — Full Plan
+# Sales Shop — Plan (simplified)
 
 ## Vision
-**Product discovery first**: a RAG-based shop where customers find products by
-chatting (keywords, meaning, age group, price), with open-source LLMs in the
-cloud and Postgres + pgvector as the product brain. No accounts — guest cart
-and wishlist live in the browser.
+**Product discovery first**: open the app, search or chat, find products.
+Next.js + TypeScript + Tailwind UI, small API layer, LangChain chat. No
+accounts, no database — the catalog is a local JSON file, all media is local.
 
 ## Stack
 | Layer | Choice |
 |---|---|
-| Frontend | Next.js 14 App Router, React 18, TypeScript, Tailwind CSS, shadcn/ui, lucide-react |
-| API | Next.js Route Handlers (`src/app/api/*`) |
-| Data | Postgres (Neon/Supabase) via Prisma 6; local snapshot fallback (`prisma/catalog.snapshot.json`) |
-| Vectors | pgvector `vector(1024)`, BGE-M3 embeddings (Ollama local / OpenRouter cloud) |
-| Chat LLM | OpenAI-compatible cloud endpoint, default Groq `openai/gpt-oss-20b` (open-source) |
-| Media | 100% local in `public/` — zero external image/API calls at runtime |
+| Frontend | Next.js 14 App Router, React 18, TypeScript (strict), Tailwind CSS, shadcn/ui |
+| API | Two small routes: `GET /api/products`, `POST /api/chat` |
+| Data | `src/data/catalog.json` (38 products, kids→seniors) + `public/` photos |
+| Chat | LangChain (`createAgent` + `ChatGroq` + `search_products` tool) with mock fallback |
 
 ## Architecture
 ```
-Browser: pages + ChatWidget ──► /api/products (DB → snapshot fallback)
+Browser: pages + ChatWidget ──► /api/products (local JSON)
                               └─► /api/chat {message, history}
-                                   ├─ LLM_API_KEY? agenticChat(): tool loop over search_products
-                                   │   (src/lib/llm.ts, max 2 rounds, mock fallback on error)
-                                   └─ else parseMessage() (src/lib/chat.ts rule parser)
-                                  Both retrieve via src/lib/rag.ts:
-                                   retrieve() → pgvector similarity (scored) → keyword fallback
-                                   → { reply, products, sources[{id,title,price,score}], retrieval }
+                                   ├─ LLM_API_KEY? runLangChainAgent() → engine "llm-langchain"
+                                   └─ else mock parser → engine "mock"
+                                  Both retrieve via src/lib/rag.ts → { reply, products, sources }
 ```
 
-## Completed phases
-1. **TS + UI migration** — all JSX→TSX, shadcn primitives (`ui/`), typed store context, fixed Next.js Link/params bugs, `error.tsx` + `global-error.tsx` boundaries.
-2. **Full-stack catalog** — Prisma schema, `db:push/seed/studio`, `/api/products`, `/api/products/[id]`, storefront reads through the API.
-3. **Chat v1** — mock parser (categories, ages, prices, recommend) + floating widget wired to cart.
-4. **FakeStore removal** — one-time snapshot (38 products, local photos in `public/products/`, `public/seed/`); runtime has zero external deps (axios uninstalled).
-5. **Age-grouped catalog** — `ageGroup` (kids|teens|adults|seniors|all) across schema, API, chat parser, LLM tool, shop "Shop by Age" filter, product badges; 18 new products (38 total).
-6. **Agentic LLM** — Groq key live, tool-calling verified (`engine: llm`), mock fallback intact.
-7. **RAG layer** — `retrieve()` with similarity scores, grounded generation, `sources[]` + `retrieval` in every chat response.
-8. **Project skills** — `.opencode/skills/{code-review-qa,catalog-db,shop-chat,ui-verify}/SKILL.md`.
+## What's done
+- TS strict + zod-validated boundaries, production build green
+- Storefront (home/shop/category/product/cart/wishlist/contact) + related items
+- Age-grouped catalog + shop age filter + chat understands ages/prices
+- LangChain RAG chat with sources, mock fallback, eval 11/11 (`npm run eval`)
+- Skills: `.opencode/skills/{code-review-qa,shop-chat,ui-verify,catalog-db}`
 
-## Go-live (needs DATABASE_URL)
+## Run it
 ```
-cp .env.example .env   # set DATABASE_URL (+ LLM_API_KEY already set locally)
-psql "$DATABASE_URL" -f prisma/extensions.sql
-npx prisma db push && npm run db:seed
-ollama pull bge-m3     # or set EMBEDDING_* for cloud
-npm run db:embed
-npm run build && npm start
+npm install
+cp .env.example .env   # optional: set LLM_API_KEY for real AI chat
+npm run dev            # http://localhost:3000
 ```
 
-## Next features (see pending.md)
-Auth + persistent cart, checkout/orders, admin product manager, RAG eval,
-recommendations ("bought together"), visual search, deploy (Vercel + Neon).
+## Possible next steps (only if wanted)
+- Postgres + pgvector for semantic search (schema was removed; re-add on demand)
+- Accounts/orders/admin (removed as out of scope)
+- Deploy to Vercel (no env needed except optional LLM_API_KEY)

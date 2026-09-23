@@ -1,10 +1,10 @@
 /**
- * RAG layer: retrieve catalog documents (vector-first, keyword fallback),
- * then generate answers grounded ONLY on retrieved docs.
+ * RAG layer: retrieve catalog documents, then generate answers grounded
+ * ONLY on retrieved docs.
  *
- * Pipeline: query → retrieve() → buildContext() → LLM → reply + sources.
- * Without DB/embeddings/LLM key, each stage degrades gracefully:
- * vector → keyword → snapshot → mock reply. Chat never 500s.
+ * Pipeline: query → retrieve() → LLM → reply + sources.
+ * Local keyword retrieval; swap in a vector index later without
+ * changing callers (ScoredProduct already carries scores).
  */
 import {
   queryProducts,
@@ -26,22 +26,32 @@ export interface Retrieval {
   via: "vector" | "keyword";
 }
 
-/** Retrieve candidate products for a query + filters. */
+/** Retrieve candidate products for a query + filters.
+ * Relaxation chain: full query → drop search text → drop age group.
+ * Never returns empty when the catalog has anything in scope. */
 export async function retrieve(
   q: ProductQuery,
   limit: number
 ): Promise<Retrieval> {
-  if (q.semantic !== false && q.search) {
+  if (q.search) {
     const ranked = await semanticSearchWithScores(q, limit);
-    if (ranked && ranked.length > 0) {
-      return { docs: ranked.slice(0, limit), via: "vector" };
+    if (ranked && ranked.length > 0) return { docs: ranked.slice(0, limit), via: "keyword" };
+  }
+  const attempts: ProductQuery[] = [
+    { ...q },
+    { ...q, search: undefined },
+    { category: q.category, ageGroup: undefined, minPrice: q.minPrice, maxPrice: q.maxPrice },
+  ];
+  for (const attempt of attempts) {
+    const products = await queryProducts({ ...attempt, limit });
+    if (products.length > 0) {
+      return {
+        docs: products.map((product) => ({ product, score: null })),
+        via: "keyword",
+      };
     }
   }
-  const products = await queryProducts({ ...q, semantic: false, limit });
-  return {
-    docs: products.map((product) => ({ product, score: null })),
-    via: "keyword",
-  };
+  return { docs: [], via: "keyword" };
 }
 
 /** Render retrieved docs as numbered context for the generating LLM. */
