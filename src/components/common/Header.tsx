@@ -12,7 +12,6 @@ const NAV = [
   { href: "/shop", label: "Shop" },
   { href: "/cart", label: "Cart" },
   { href: "/wishlist", label: "Wishlist" },
-  { href: "/contact", label: "Contact" },
 ];
 
 export default function Header() {

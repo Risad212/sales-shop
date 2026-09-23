@@ -1,8 +1,10 @@
 import { chromium } from "playwright-core";
 
-const URL = process.env.SHOT_URL ?? "http://localhost:3000/";
-const OUT_TOP = "/tmp/shot-home-top.png";
-const OUT_FULL = "/tmp/shot-home-full.png";
+const shots: [string, string][] = [
+  ["http://localhost:3100/", "/tmp/shot-home-full.png"],
+  ["http://localhost:3100/shop", "/tmp/shot-shop.png"],
+  ["http://localhost:3100/product/25", "/tmp/shot-product.png"],
+];
 
 async function main(): Promise<void> {
   const browser = await chromium.launch();
@@ -13,10 +15,12 @@ async function main(): Promise<void> {
     page.on("console", (m) => {
       if (m.type() === "error") errors.push("CONSOLE: " + m.text().slice(0, 200));
     });
-    await page.goto(URL, { waitUntil: "networkidle", timeout: 45000 });
-    await page.waitForTimeout(2500);
-    await page.screenshot({ path: OUT_TOP });
-    await page.screenshot({ path: OUT_FULL, fullPage: true });
+    for (const [url, path] of shots) {
+      await page.goto(url, { waitUntil: "networkidle", timeout: 45000 });
+      await page.waitForTimeout(2500);
+      await page.screenshot({ path, fullPage: true });
+      console.log("saved", path);
+    }
     console.log("ERRORS:", errors.length > 0 ? errors.join("\n") : "none");
   } finally {
     await browser.close();

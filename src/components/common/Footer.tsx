@@ -10,7 +10,6 @@ const QUICK_LINKS = [
   { href: "/shop", label: "Shop" },
   { href: "/cart", label: "Cart" },
   { href: "/wishlist", label: "Wishlist" },
-  { href: "/contact", label: "Contact" },
 ];
 
 export default function Footer() {
